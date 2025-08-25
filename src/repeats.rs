@@ -23,6 +23,30 @@ use super::Matcher;
 /// ```
 pub struct Repeat<T: Matcher>(T);
 
+/// `RepeatUntil` is same to "*" in regex.
+/// # Example
+/// ```
+/// use rexify::Matcher;
+/// use rexify::Rex;
+/// use rexify::repeats::RepeatUntil;
+/// use rexify::any_char::AnyChar;
+/// use rexify::literal::Literal;
+///
+/// let rex = Rex::new(vec![
+///     Box::new(RepeatUntil::new(
+///         AnyChar::new(),
+///         Literal::new("Hello"),
+///     ))
+/// ]);
+///
+/// assert_eq!(rex.find("aaHelloHello, World!"), Some(0));
+/// assert_eq!(rex.capture("aaHelloHello, World!"), Some((7, vec!["a", "a", "Hello"])));
+/// ```
+pub struct RepeatUntil<T: Matcher, U: Matcher> {
+    repeat: T,
+    until: U,
+}
+
 /// `Repeat1` is same to "+" in regex.
 /// # Example
 /// ```
@@ -89,6 +113,57 @@ impl<T: Matcher> Matcher for Repeat<T> {
         }
 
         Some((index, capture))
+    }
+}
+
+impl<T: Matcher, U: Matcher> RepeatUntil<T, U> {
+    /// Create new `RepeatUntil` object.
+    pub fn new(repeat: T, until: U) -> Self {
+        Self {
+            repeat: repeat,
+            until: until,
+        }
+    }
+}
+
+impl<T: Matcher, U: Matcher> Matcher for RepeatUntil<T, U> {
+    fn match_with(&self, target: &str) -> Option<usize> {
+        let mut index = 0;
+        loop {
+            if let Some(len) = self.until.match_with(&target[index..]) {
+                index += len;
+                break Some(index);
+            }
+
+            if let Some(len) = self.repeat.match_with(&target[index..])
+                && len != 0
+            {
+                index += len;
+            } else {
+                break None;
+            }
+        }
+    }
+
+    fn capture<'a>(&self, target: &'a str) -> Option<(usize, Vec<&'a str>)> {
+        let mut captures = Vec::new();
+        let mut index = 0;
+        loop {
+            if let Some((len, mut cap)) = self.until.capture(&target[index..]) {
+                index += len;
+                captures.append(&mut cap);
+                break Some((index, captures));
+            }
+
+            if let Some((len, mut cap)) = self.repeat.capture(&target[index..])
+                && len != 0
+            {
+                index += len;
+                captures.append(&mut cap);
+            } else {
+                break None;
+            }
+        }
     }
 }
 

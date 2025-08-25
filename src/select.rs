@@ -45,8 +45,8 @@ impl Matcher for Select {
 
     fn capture<'a>(&self, target: &'a str) -> Option<(usize, Vec<&'a str>)> {
         for rule in &self.0 {
-            if let Some(capture) = rule.capture(target) {
-                return Some(capture);
+            if let Some(len) = rule.match_with(target) {
+                return Some((len, vec![&target[..len]]));
             }
         }
 

@@ -20,13 +20,13 @@
 //! use rexify::repeats::Repeat1;
 //!
 //! let rex = Rex::new(vec![
-//!     Box::new(Repeat1::new(Number::new())),
+//!     Box::new(Number::new()),
 //!     Box::new(Repeat1::new(AnyChar::new())),
 //! ]);
 //! let text = "asdija123102abc";
 //!
 //! assert_eq!(rex.find(text), Some(6));
-//! assert_eq!(rex.capture(&text[6 ..]), Some((9, vec!["1", "2", "3", "1", "0", "2", "a", "b", "c"])));
+//! assert_eq!(rex.capture(&text[6 ..]), Some((9, vec!["123102", "a", "b", "c"])));
 //! ````
 
 pub mod alpha;
@@ -55,13 +55,13 @@ pub use select::*;
 /// use rexify::repeats::Repeat1;
 ///
 /// let rex = Rex::new(vec![
-///     Box::new(Repeat1::new(Number::new())),
+///     Box::new(Number::new()),
 ///     Box::new(Repeat1::new(AnyChar::new())),
 /// ]);
 /// let text = "asdija123102abc";
 ///
 /// assert_eq!(rex.find(text), Some(6));
-/// assert_eq!(rex.capture(&text[6 ..]), Some((9, vec!["1", "2", "3", "1", "0", "2", "a", "b", "c"])));
+/// assert_eq!(rex.capture(&text[6 ..]), Some((9, vec!["123102", "a", "b", "c"])));
 /// ````
 pub trait Matcher {
     /// If `self` is matches with `target` from first, returns the length of matches.
@@ -94,13 +94,13 @@ pub trait Matcher {
 /// use rexify::repeats::Repeat1;
 ///
 /// let rex = Rex::new(vec![
-///     Box::new(Repeat1::new(Number::new())),
+///     Box::new(Number::new()),
 ///     Box::new(Repeat1::new(AnyChar::new())),
 /// ]);
 /// let text = "asdija123102abc";
 ///
 /// assert_eq!(rex.find(text), Some(6));
-/// assert_eq!(rex.capture(&text[6 ..]), Some((9, vec!["1", "2", "3", "1", "0", "2", "a", "b", "c"])));
+/// assert_eq!(rex.capture(&text[6 ..]), Some((9, vec!["123102", "a", "b", "c"])));
 /// ````
 pub struct Rex {
     rule: Vec<Box<dyn Matcher>>,
