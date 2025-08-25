@@ -1,0 +1,15 @@
+[package]
+name = "rexify"
+version = "0.1.0"
+edition = "2024"
+authors = ["kntt32 <knt.t@outlook.com>"]
+license = "MIT"
+description = "trait based matcher alternative to Regex"
+readme = "README.md"
+repository = "https://github.com/kntt32/rexify"
+homepage = "https://github.com/kntt32/rexify"
+keywords = ["regex", "matcher"]
+categories = ["text-processing"]
+documentations = "https://docs.rs/rexify"
+
+[dependencies]
