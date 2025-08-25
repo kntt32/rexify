@@ -13,7 +13,7 @@ use super::Matcher;
 /// let rex = Rex::new(vec![
 ///     Box::new(Range::new('a', 'e'))
 /// ]);
-/// 
+///
 /// assert_eq!(rex.find("123456 Hello, World!"), Some(8));
 /// ```
 pub struct Range {

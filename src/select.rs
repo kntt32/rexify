@@ -1,4 +1,3 @@
-
 //! This module provides selector matcher.
 //! - `Select`: like "|" in regex.
 
@@ -20,7 +19,7 @@ use super::Matcher;
 ///         ]
 ///     ))
 /// ]);
-/// 
+///
 /// assert_eq!(rex.find("123456 hello, Hello, World!"), Some(7));
 /// ```
 

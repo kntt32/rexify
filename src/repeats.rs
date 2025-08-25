@@ -18,7 +18,7 @@ use super::Matcher;
 ///         Literal::new("Hello")
 ///     ))
 /// ]);
-/// 
+///
 /// assert_eq!(rex.find("123456 HelloHello, World!"), Some(0));
 /// ```
 pub struct Repeat<T: Matcher>(T);
@@ -36,7 +36,7 @@ pub struct Repeat<T: Matcher>(T);
 ///         Literal::new("Hello")
 ///     ))
 /// ]);
-/// 
+///
 /// assert_eq!(rex.find("123456World!"), None);
 /// ```
 pub struct Repeat1<T: Matcher>(T);
@@ -54,7 +54,7 @@ pub struct Repeat1<T: Matcher>(T);
 ///         Literal::new("Hello")
 ///     ))
 /// ]);
-/// 
+///
 /// assert_eq!(rex.find("123456World!"), Some(0));
 /// ```
 pub struct Optional<T: Matcher>(T);
@@ -68,8 +68,10 @@ impl<T: Matcher> Repeat<T> {
 
 impl<T: Matcher> Matcher for Repeat<T> {
     fn match_with(&self, target: &str) -> Option<usize> {
-        let mut index = 0; 
-        while let Some(len) = self.0.match_with(&target[index ..]) && len != 0 {
+        let mut index = 0;
+        while let Some(len) = self.0.match_with(&target[index..])
+            && len != 0
+        {
             index += len;
         }
 
@@ -79,7 +81,9 @@ impl<T: Matcher> Matcher for Repeat<T> {
     fn capture<'a>(&self, target: &'a str) -> Option<(usize, Vec<&'a str>)> {
         let mut index = 0;
         let mut capture = Vec::new();
-        while let Some((len, mut cap)) = self.0.capture(&target[index ..]) && len != 0 {
+        while let Some((len, mut cap)) = self.0.capture(&target[index..])
+            && len != 0
+        {
             index += len;
             capture.append(&mut cap);
         }
@@ -97,29 +101,29 @@ impl<T: Matcher> Repeat1<T> {
 
 impl<T: Matcher> Matcher for Repeat1<T> {
     fn match_with(&self, target: &str) -> Option<usize> {
-        let mut index = 0; 
-        while let Some(len) = self.0.match_with(&target[index ..]) && len != 0 {
+        let mut index = 0;
+        while let Some(len) = self.0.match_with(&target[index..])
+            && len != 0
+        {
             index += len;
         }
 
-        if index != 0 {
-            Some(index)
-        }else {
-            None
-        }
+        if index != 0 { Some(index) } else { None }
     }
 
     fn capture<'a>(&self, target: &'a str) -> Option<(usize, Vec<&'a str>)> {
         let mut index = 0;
         let mut capture = Vec::new();
-        while let Some((len, mut cap)) = self.0.capture(&target[index ..]) && len != 0 {
+        while let Some((len, mut cap)) = self.0.capture(&target[index..])
+            && len != 0
+        {
             index += len;
             capture.append(&mut cap);
         }
 
         if index != 0 {
             Some((index, capture))
-        }else {
+        } else {
             None
         }
     }

@@ -13,7 +13,7 @@ use super::Matcher;
 /// let rex = Rex::new(vec![
 ///     Box::new(AnyChar::new())
 /// ]);
-/// 
+///
 /// assert_eq!(rex.find("a"), Some(0));
 /// ```
 #[derive(Clone, Copy, Debug, PartialEq, Eq)]

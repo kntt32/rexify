@@ -13,7 +13,7 @@ use super::Matcher;
 /// let rex = Rex::new(vec![
 ///     Box::new(Literal::new("Hello"))
 /// ]);
-/// 
+///
 /// assert_eq!(rex.find("123456 Hello, World!"), Some(7));
 /// ```
 #[derive(Clone, Copy, Debug, PartialEq, Eq)]

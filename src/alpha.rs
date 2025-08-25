@@ -13,7 +13,7 @@ use super::Matcher;
 /// let rex = Rex::new(vec![
 ///     Box::new(Alpha::new())
 /// ]);
-/// 
+///
 /// assert_eq!(rex.find("123123a"), Some(6));
 /// ```
 #[derive(Clone, Copy, Debug, PartialEq, Eq)]
@@ -29,7 +29,7 @@ impl Matcher for Alpha {
     fn match_with(&self, target: &str) -> Option<usize> {
         if target.starts_with(|c: char| c.is_ascii_alphabetic()) {
             Some(1)
-        }else {
+        } else {
             None
         }
     }

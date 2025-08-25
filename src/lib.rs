@@ -29,18 +29,18 @@
 //! assert_eq!(rex.capture(&text[6 ..]), Some((9, vec!["1", "2", "3", "1", "0", "2", "a", "b", "c"])));
 //! ````
 
+pub mod alpha;
 pub mod any_char;
 pub mod literal;
 pub mod number;
-pub mod alpha;
 pub mod range;
 pub mod repeats;
 pub mod select;
 
+pub use alpha::*;
 pub use any_char::*;
 pub use literal::*;
 pub use number::*;
-pub use alpha::*;
 pub use range::*;
 pub use repeats::*;
 pub use select::*;
